@@ -22,6 +22,20 @@ const Gamediv = styled.div`
     border-color: black;
     border-style: solid;
     margin:auto;
+    width:50%;
+`
+const TextAreaDiv = styled.div`
+    border: 2px black;
+    border-style: solid;
+    margin: auto;
+    background-color: lightcyan;
+    min-height: 100px;
+    width: 25%;
+`
+const MainContentDiv = styled.div`
+    display: flex;
+    flex-direction:row;
+
 `
 
 interface IGameOfLifeProps {
@@ -52,6 +66,7 @@ const GameOfLife: React.FC<IGameOfLifeProps> =({}) => {
     const classes2 = useStyles2();
     const [count2, setCount2] = React.useState(0);
     const [speed, setSpeed] = React.useState(200);
+    const [textarea, setTextArea] = React.useState('');
     let engine=React.useRef(0 as number)
     const myObject = {
                         state:'inactive', 
@@ -106,6 +121,7 @@ const GameOfLife: React.FC<IGameOfLifeProps> =({}) => {
     }, [themyObjects, setObjects, setCount, count])
 
     function Go(){
+        setTextArea(textarea+'Engine Run.../n/r')
         engine.current = setInterval(()=>{executeStep()},speed)
         //setCount(count + 1)
     }
@@ -177,15 +193,23 @@ const GameOfLife: React.FC<IGameOfLifeProps> =({}) => {
         <section>
             <h1>Game Of Life</h1>
             {/* <button onClick={()=>Generate(rect2)}/> */}
-            <Gamediv>
-                <Stage width={800} height={400}>
-                    <Layer>
-                        {themyObjects.map((object)=>{
-                            return <Rect number={object.x} key={object.x} x={object.i} y={object.j} width={10} height={10} fill={object.color} shadowBlur={6} onClick={(e)=>(setObj(object,themyObjects))}/>                            
-                        })}
-                    </Layer>
-                </Stage>
-            </Gamediv>
+            <MainContentDiv>
+                <div/>
+                <Gamediv>
+                    <Stage width={800} height={400}>
+                        <Layer>
+                            {themyObjects.map((object)=>{
+                                return <Rect number={object.x} key={object.x} x={object.i} y={object.j} width={10} height={10} fill={object.color} shadowBlur={6} onClick={(e)=>(setObj(object,themyObjects))}/>                            
+                            })}
+                        </Layer>
+                    </Stage>
+                </Gamediv>
+                <TextAreaDiv>
+                        'afasfasfasasfa'
+                        {textarea}
+                </TextAreaDiv>
+            </MainContentDiv>
+            
             <div className={classes2.root}>
                 <Button onClick={() => Go()} variant="contained" color="primary">GO</Button>
                 <Button onClick={() => Clear()} variant="contained" color="primary">Clear</Button>

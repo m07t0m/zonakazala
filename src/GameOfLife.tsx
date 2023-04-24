@@ -22,15 +22,15 @@ const Gamediv = styled.div`
     border-color: black;
     border-style: solid;
     margin:auto;
-    width:50%;
 `
 const TextAreaDiv = styled.div`
     border: 2px black;
     border-style: solid;
     margin: auto;
     background-color: lightcyan;
-    min-height: 100px;
     width: 25%;
+    height: 300px;
+    overflow-y: auto;
 `
 const MainContentDiv = styled.div`
     display: flex;
@@ -66,7 +66,7 @@ const GameOfLife: React.FC<IGameOfLifeProps> =({}) => {
     const classes2 = useStyles2();
     const [count2, setCount2] = React.useState(0);
     const [speed, setSpeed] = React.useState(200);
-    const [textarea, setTextArea] = React.useState('');
+    const [textarea, setTextArea] = React.useState('<b>Game Of Live<b><br>');
     let engine=React.useRef(0 as number)
     const myObject = {
                         state:'inactive', 
@@ -121,7 +121,7 @@ const GameOfLife: React.FC<IGameOfLifeProps> =({}) => {
     }, [themyObjects, setObjects, setCount, count])
 
     function Go(){
-        setTextArea(textarea+'Engine Run.../n/r')
+        setTextArea(textarea+'Engine Run...<br>')
         engine.current = setInterval(()=>{executeStep()},speed)
         //setCount(count + 1)
     }
@@ -177,9 +177,11 @@ const GameOfLife: React.FC<IGameOfLifeProps> =({}) => {
         setCount2(count2 => count2 + 1)
     }, [themyObjects, setObjects, setCount2, count2])
     function stopEngine(){
+        setTextArea(textarea+'Engine Stopped...<br>')
         clearInterval(engine.current);
     }
     function Clear(){
+        setTextArea(textarea+'Area Cleared...<br>')
         let newView = someArray
         setObjects(newView)
         setCount(count + 1)
@@ -205,8 +207,7 @@ const GameOfLife: React.FC<IGameOfLifeProps> =({}) => {
                     </Stage>
                 </Gamediv>
                 <TextAreaDiv>
-                        'afasfasfasasfa'
-                        {textarea}
+                        <div dangerouslySetInnerHTML={{__html: textarea}} />
                 </TextAreaDiv>
             </MainContentDiv>
             
